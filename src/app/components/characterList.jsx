@@ -3,18 +3,19 @@
 import React, { useState } from 'react';
 import CharacterPreview from './characterPrev.HomePage';
 
-export default function CharacterList() {
-  const characters = [
-    { id: 1, image: '/fantasyCharacter1.jpg', name: 'J-mak Torson', race: 'Human', className: 'Fighter', level: 5, hp: 45 },
-    { id: 2, image: '/fantasyCharacterElfGirl1.png', name: 'Leafa Thornwood', race: 'Elf', className: 'Ranger', level: 6, hp: 38 },
-    { id: 3, image: '/fantasyCharacterDwarf1.jpg', name: 'Grimli', race: 'Dwarf', className: 'Cleric', level: 6, hp: 50 },
-    { id: 4, image: '/fantasyCharacterTiefling1.jpg', name: 'Nyxira Emberveil', race: 'Tiefling', className: 'Sorcerer', level: 7, hp: 30 },
-    { id: 5, image: '/fantasyCharacterHuman1.png', name: 'Sir Elric Dawnwatch', race: 'Human', className: 'Paladin', level: 5, hp: 40 },
-    { id: 6, image: '/fantasyCharacterGoblin1.png', name: 'Nott', race: 'Goblin', className: 'Rogue', level: 4, hp: 25 },
-    { id: 7, image: '/fantasyCharacterHalfling1.jpg', name: 'Liora Faelwen', race: 'Halfling', className: 'Bard', level: 4, hp: 28 },
-    { id: 8, image: '/fantasyCharacterHuman2.jpg', name: 'Thamior Quillshade', race: 'Human', className: 'Wizard', level: 10, hp: 60 },
-  ];
+// Export the characters array
+export const characters = [
+  { id: 1, image: '/fantasyCharacter1.jpg', name: 'J-mak Torson', race: 'Human', className: 'Fighter', level: 5, hp: 45 },
+  { id: 2, image: '/fantasyCharacterElfGirl1.png', name: 'Leafa Thornwood', race: 'Elf', className: 'Ranger', level: 6, hp: 38 },
+  { id: 3, image: '/fantasyCharacterDwarf1.jpg', name: 'Grimli', race: 'Dwarf', className: 'Cleric', level: 6, hp: 50 },
+  { id: 4, image: '/fantasyCharacterTiefling1.jpg', name: 'Nyxira Emberveil', race: 'Tiefling', className: 'Sorcerer', level: 7, hp: 30 },
+  { id: 5, image: '/fantasyCharacterHuman1.png', name: 'Sir Elric Dawnwatch', race: 'Human', className: 'Paladin', level: 5, hp: 40 },
+  { id: 6, image: '/fantasyCharacterGoblin1.png', name: 'Nott', race: 'Goblin', className: 'Rogue', level: 4, hp: 25 },
+  { id: 7, image: '/fantasyCharacterHalfling1.jpg', name: 'Liora Faelwen', race: 'Halfling', className: 'Bard', level: 4, hp: 28 },
+  { id: 8, image: '/fantasyCharacterHuman2.jpg', name: 'Thamior Quillshade', race: 'Human', className: 'Wizard', level: 10, hp: 60 },
+];
 
+export default function CharacterList() {
   const [currentPage, setCurrentPage] = useState(0);
   const charactersPerPage = 6;
 
@@ -48,6 +49,7 @@ export default function CharacterList() {
         {currentCharacters.map((character) => (
           <CharacterPreview
             key={character.id}
+            id={character.id}
             image={character.image}
             name={character.name}
             race={character.race}
