@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-const CharacterPreview = ({ id, image, name, race, className, level, hp }) => {
+const CharacterPreview = ({ id, image, name, race, className, level, maxHP }) => {
   // Create a slugified version of the name
   const slug = name.toLowerCase().replace(/\s+/g, '-');
 
@@ -19,7 +19,7 @@ const CharacterPreview = ({ id, image, name, race, className, level, hp }) => {
           <p className="text-sm">Race: {race}</p>
           <p className="text-sm">Class: {className}</p>
           <p className="text-sm">Level: {level}</p>
-          <p className="text-sm">HP: {hp}</p>
+          <p className="text-sm">HP: {maxHP}</p>
         </div>
       </div>
     </Link>
