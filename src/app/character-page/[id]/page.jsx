@@ -2,8 +2,11 @@
 
 import { characters } from '../../components/characterList';
 import Navbar from '../../components/navbar';
+import { useTheme } from '../../components/themeContext'; // Import the useTheme hook
 
 export default function CharacterPage({ params }) {
+  const { isDarkTheme } = useTheme(); // Access the isDarkTheme state
+
   // Extract the ID from the URL (e.g., "1-j-mak-torson" -> "1")
   const id = params.id.split('-')[0];
 
@@ -38,8 +41,16 @@ export default function CharacterPage({ params }) {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center p-8 bg-gray-100">
-        <div className="w-full min-w-4xl max-w-4xl bg-white shadow-lg rounded-lg p-6">
+      <div
+        className={`flex justify-center p-8 ${
+          isDarkTheme ? 'bg-gray-900 text-gray-200' : 'bg-gray-100 text-gray-800'
+        }`}
+      >
+        <div
+          className={`w-full min-w-4xl max-w-4xl shadow-lg rounded-lg p-6 ${
+            isDarkTheme ? 'bg-gray-800 text-gray-200' : 'bg-white text-gray-800'
+          }`}
+        >
           {/* Character Header */}
           <div className="flex items-center mb-6">
             <img
@@ -49,15 +60,15 @@ export default function CharacterPage({ params }) {
             />
             <div>
               <h1 className="text-5xl font-bold">{name}</h1>
-              <p className="text-lg text-gray-600 mt-3">Race: {race}</p>
-              <p className="text-lg text-gray-600">Class: {className}</p>
-              <p className="text-lg text-gray-600">Level {level}</p>
-              <p className="text-lg text-gray-600">Alignment: {alignment}</p>
+              <p className="text-lg mt-3">Race: {race}</p>
+              <p className="text-lg">Class: {className}</p>
+              <p className="text-lg">Level {level}</p>
+              <p className="text-lg">Alignment: {alignment}</p>
             </div>
           </div>
 
           {/* Character Abilities and Stats */}
-          <div className="grid grid-cols-2 gap-6 mb-6 border-t border-gray-300 pt-6">
+          <div className="grid grid-cols-2 gap-6 mb-6 border-t pt-6">
             <div>
               <h2 className="text-2xl font-semibold mb-2">Abilities</h2>
               <ul className="list-disc list-inside">
@@ -133,10 +144,10 @@ export default function CharacterPage({ params }) {
           </div>
 
           {/* Backstory */}
-              <div className="flex-col justify-items-center mt-6 border-t border-gray-300 pt-6">
-                <h2 className="text-2xl font-semibold mb-2">Backstory</h2>
-                <p className="text-lg">{backstory}</p>
-              </div>
+          <div className="flex-col justify-items-center mt-6 border-t pt-6">
+            <h2 className="text-2xl font-semibold mb-2">Backstory</h2>
+            <p className="text-lg">{backstory}</p>
+          </div>
         </div>
       </div>
     </>

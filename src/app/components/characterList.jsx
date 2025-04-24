@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTheme } from './themeContext';
 import CharacterPreview from './characterPrev.HomePage';
 
 // Export the characters array
@@ -232,6 +233,8 @@ export const characters = [
 ];
 
 export default function CharacterList() {
+  const {isDarkTheme} = useTheme();
+
   const [currentPage, setCurrentPage] = useState(0);
   const charactersPerPage = 6;
 
@@ -254,10 +257,20 @@ export default function CharacterList() {
   };
 
   return (
-    <div className="bg-gray-400 mt-7 p-4 rounded-lg">
+    <div
+      className={`mt-7 p-4 rounded-lg ${
+        isDarkTheme ? 'bg-gray-800 text-gray-200' : 'bg-gray-400 text-gray-800'
+      }`}
+    >
       <div className="flex items-center mb-4 space-x-4">
         <h2 className="text-2xl font-semibold">Your Characters</h2>
-        <button className="bg-red-500 hover:bg-red-600 text-white rounded-2xl border-2 border-black p-2">
+        <button
+          className={`rounded-2xl border-2 p-2 ${
+            isDarkTheme
+              ? 'bg-red-600 hover:bg-red-700 text-white border-gray-600'
+              : 'bg-red-500 hover:bg-red-600 text-white border-black'
+          }`}
+        >
           Create New +
         </button>
       </div>
@@ -279,18 +292,30 @@ export default function CharacterList() {
         <button
           onClick={handlePreviousPage}
           disabled={currentPage === 0}
-          className={`px-4 py-2 rounded-lg border-2 border-black ${
-            currentPage === 0 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600 text-white'
+          className={`px-4 py-2 rounded-lg border-2 ${
+            currentPage === 0
+              ? isDarkTheme
+                ? 'bg-gray-700 text-gray-500 cursor-not-allowed border-gray-600'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed border-black'
+              : isDarkTheme
+              ? 'bg-red-600 hover:bg-red-700 text-white border-gray-600'
+              : 'bg-red-500 hover:bg-red-600 text-white border-black'
           }`}
         >
           Previous
         </button>
-        <p className="mr-7 mt-4">{`page ${currentPage + 1}`}</p>
+        <p className="mr-7 mt-4">{`Page ${currentPage + 1}`}</p>
         <button
           onClick={handleNextPage}
           disabled={currentPage === totalPages - 1}
-          className={`px-4 py-2 rounded-lg border-2 border-black ${
-            currentPage === totalPages - 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 text-white'
+          className={`px-4 py-2 rounded-lg border-2 ${
+            currentPage === totalPages - 1
+              ? isDarkTheme
+                ? 'bg-gray-700 text-gray-500 cursor-not-allowed border-gray-600'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed border-black'
+              : isDarkTheme
+              ? 'bg-blue-600 hover:bg-blue-700 text-white border-gray-600'
+              : 'bg-blue-500 hover:bg-blue-600 text-white border-black'
           }`}
         >
           Next
