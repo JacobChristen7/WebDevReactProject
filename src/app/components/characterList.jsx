@@ -284,7 +284,7 @@ export default function CharacterList() {
             race={character.race}
             className={character.className}
             level={character.level}
-            hp={character.maxHP}
+            maxHP={character.maxHP}
           />
         ))}
       </div>
