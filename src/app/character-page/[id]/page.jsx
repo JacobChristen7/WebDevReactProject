@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { characters } from '../../components/characterList';
 import Navbar from '../../components/navbar';
 import { useTheme } from '../../components/themeContext'; // Import the useTheme hook
@@ -37,6 +38,53 @@ export default function CharacterPage({ params }) {
     alignment,
     backstory,
   } = character;
+
+  // Initialize currency state from localStorage or default values
+  const [currency, setCurrency] = useState(() => {
+    const savedCurrency = localStorage.getItem(`currency-${id}`);
+    return savedCurrency
+      ? JSON.parse(savedCurrency)
+      : { copper: 0, silver: 0, gold: 0 };
+  });
+
+  // Save currency to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(`currency-${id}`, JSON.stringify(currency));
+  }, [currency, id]);
+
+  // State to manage input values for each currency type
+  const [currencyInputs, setCurrencyInputs] = useState({ copper: '', silver: '', gold: '' });
+
+  // Handlers for adding and subtracting currency
+  const handleAddCurrency = (type, amount) => {
+    setCurrency((prev) => ({
+      ...prev,
+      [type]: prev[type] + amount,
+    }));
+  };
+
+  const handleSubtractCurrency = (type, amount) => {
+    setCurrency((prev) => ({
+      ...prev,
+      [type]: Math.max(0, prev[type] - amount), // Prevent negative values
+    }));
+  };
+
+  // Handle input changes
+  const handleInputChange = (type, value) => {
+    setCurrencyInputs((prev) => ({
+      ...prev,
+      [type]: value,
+    }));
+  };
+
+  // Reset input field after adding or subtracting
+  const resetInputField = (type) => {
+    setCurrencyInputs((prev) => ({
+      ...prev,
+      [type]: '',
+    }));
+  };
 
   return (
     <>
@@ -128,6 +176,43 @@ export default function CharacterPage({ params }) {
             </div>
             <div>
               <h2 className="text-2xl font-semibold mb-2">Currency</h2>
+              <div className="flex flex-col gap-4">
+                {['copper', 'silver', 'gold'].map((type) => (
+                  <div key={type} className="flex flex-col">
+                    <h3 className="text-lg font-medium capitalize">{type} Coins</h3>
+                    <p className="text-sm mb-1">{currency[type]}</p>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => {
+                          const amount = parseInt(currencyInputs[type]) || 1; // Default to 1 if input is empty
+                          handleSubtractCurrency(type, amount);
+                          resetInputField(type); // Clear the input field
+                        }}
+                        className="px-2 py-1 bg-red-500 text-white rounded-md text-sm hover:bg-red-600"
+                      >
+                        -
+                      </button>
+                      <input
+                        type="number"
+                        min="0"
+                        value={currencyInputs[type]} // Bind input value to state
+                        onChange={(e) => handleInputChange(type, e.target.value)} // Update state on input change
+                        className="w-16 p-1 border rounded-md text-center text-sm"
+                      />
+                      <button
+                        onClick={() => {
+                          const amount = parseInt(currencyInputs[type]) || 1; // Default to 1 if input is empty
+                          handleAddCurrency(type, amount);
+                          resetInputField(type); // Clear the input field
+                        }}
+                        className="px-2 py-1 bg-green-500 text-white rounded-md text-sm hover:bg-green-600"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
