@@ -90,14 +90,41 @@ export default function CharacterPage({ params }) {
     <>
       <Navbar />
       <div
+        style={{
+          backgroundImage: `url('/old-paper-background.png')`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          minHeight: '100vh',
+          position: 'relative', // Ensure the overlay and content are positioned correctly
+        }}
         className={`flex justify-center p-8 ${
-          isDarkTheme ? 'bg-gray-900 text-gray-200' : 'bg-gray-100 text-gray-800'
+          isDarkTheme ? 'text-gray-200' : 'text-gray-800'
         }`}
       >
+        {/* Transparent Black Overlay */}
+        {isDarkTheme && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent black
+              zIndex: 1, // Ensure it appears above the background
+            }}
+          ></div>
+        )}
+
         <div
           className={`w-full min-w-4xl max-w-4xl shadow-lg rounded-lg p-6 ${
             isDarkTheme ? 'bg-gray-800 text-gray-200' : 'bg-white text-gray-800'
           }`}
+          style={{
+            position: 'relative', // Ensure content is above the overlay
+            zIndex: 2,
+          }}
         >
           {/* Character Header */}
           <div className="flex items-center mb-6">
